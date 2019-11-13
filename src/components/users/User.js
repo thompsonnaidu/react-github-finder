@@ -1,36 +1,35 @@
 import React, { Component } from 'react'
 import UserItem from './UserItem';
-
-class User extends Component {
-
-    render() {
-        const ad=this.props.users;
-        return (
-            <div style={userStyle}>
-
-                {
-                  
-                //     this.props.users.map( user =>(
-                //   //  <div>{user.id}</div>
-                //      <UserItem key={user.id} user={user}/>
-                //     ))
-                //    console.log(ads)
-                
-                // this.props.users.forEach(user => {
-                //     // <UserItem key={user.id} user={user}/>.
-                //     console.log(user);
-                // })  
-            
-                }
-            </div>
-        )
+import Spinner from '../layout/Spinner'
+import PropTypes from 'prop-types';
+const User = ({users,loading})=> {
+    if(loading){
+        return <Spinner/>
     }
+    return (
+        <div style={userStyle}>
+            {
+               
+                users.map( user =>(
+               
+                <UserItem key={user.id} user={user}/>
+                ))
+          
+            }
+        </div>
+    )
+    
 }
+User.propTypes={
+    users:PropTypes.array.isRequired,
+    loading:PropTypes.bool.isRequired
+ };
 
 const userStyle={
     display: 'grid',
     gridTemplateColumns: 'repeat(3,1fr)',
     gridGap:'1rem'
 }
+
 
 export default User
