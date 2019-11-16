@@ -2,31 +2,34 @@ import React, { Component, Fragment} from 'react'
 import PropTypes from 'prop-types';
 import Spinner from '../layout/Spinner'
 import {Link} from 'react-router-dom'
+import Repos from '../repos/Repos';
+
 export default class UserDetails extends Component {
 
     static propTypes={
         loading:PropTypes.bool.isRequired,
         user:PropTypes.object.isRequired,
         getUser:PropTypes.func.isRequired,
+        getUserRepos:PropTypes.func.isRequired,
+        repos:PropTypes.object.isRequired,
     }
     componentDidMount(){
-        this.props.getUser(this.props.match.params.login)
+        this.props.getUser(this.props.match.params.login);
+        this.props.getUserRepos(this.props.match.params.login)
     }
 
     render() {
-        const {loading}=this.props;
+        const {loading,repos}=this.props;
         console.log("user details",this.props.user," this is the url ",this.props.loading)
         const {
             avatar_url,
             bio,
             blog,
             company,
-            email,
             followers,
             following,
             hireable,
             html_url,
-            id,
             location,
             login,
             name,
@@ -52,11 +55,11 @@ export default class UserDetails extends Component {
                     <div className="all-center">
                         { bio && <Fragment>
                             <h3>Bio</h3>
-                            <p>{bio}</p>
+                            <p>{bio}</p>    
                         </Fragment>
 
                         }
-                        <a href={html_url} className="btn btn-dark my-1">
+                        <a href={html_url} target="_blank" className="btn btn-dark my-1">
                             Visit Github Profile
                         </a>
                         <ul>
@@ -82,11 +85,13 @@ export default class UserDetails extends Component {
                     </div>
                 </div>
                 <div className="card text-card">
-                        <div className='badge badge-primary'> Followers: {followers}</div>
-                        <div className='badge badge-success'>Following: {following}</div>
+                        <div className='badge badge-success'> Followers: {followers}</div>
+                        <div className='badge badge-primary'>Following: {following}</div>
                         <div className='badge badge-default'>Public Repos: {public_repos}</div>
                         <div className='badge badge-dark'>Public Gists: {public_gists}</div>
                 </div>
+
+                <Repos repos={repos}/>
             </Fragment>
         )
     }

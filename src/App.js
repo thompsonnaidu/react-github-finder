@@ -8,12 +8,14 @@ import UserDetails from './components/users/UserDetails';
 import Search from './components/users/Search';
 import About from './components/pages/About';
 import axios from 'axios'
+
 class App extends Component {
   
   client_id="a1af30da73995945d0c8";
   client_secret="93e22c23fd861c5a7672fa735e9c5aab89c2c1a5";
   state={
     users:[],
+    repos:[],
     user:{},
     loading:false,
     alert:null
@@ -42,6 +44,17 @@ class App extends Component {
 
   }
 
+
+  //get github user repo  
+  getUserRepos= async(username)=>{
+    console.log("search user with the value as ",username);
+    this.setState({loading:true});
+    
+    let endpointUrl=`https://api.github.com/users/${username}/repos?per_page=8&sort=created:asc&client_id=${this.client_id}&client_secret=${this.client_secret}`;
+    const res=await axios.get(endpointUrl);
+    console.log(`endpoint: ${endpointUrl} response ${res.data}`)
+    this.setState({loading:false,repos:res.data});
+  }
 
   //get github user details
   getUser= async(username)=>{
@@ -86,7 +99,7 @@ class App extends Component {
 
            <Route exact path="/user/:login" render={ props=>(
              <Fragment>
-               <UserDetails {...props } getUser={this.getUser} user={this.state.user} loading={this.state.loading}/>
+               <UserDetails {...props } getUser={this.getUser} getUserRepos={this.getUserRepos} user={this.state.user} loading={this.state.loading} repos={this.state.repos}/>
              </Fragment>
            )}/>
 
