@@ -4,8 +4,12 @@ import AlertContext from '../../context/alert/alertContext'
 const Alert = () => {
     const alertContext=useContext(AlertContext);
     
-    const alert= alertContext;
-    
+    let alert= alertContext;
+    if(alert.alert!=null){
+        alert=alert.alert
+    }else{
+        alert=null;
+    }
     return (
         alert !== null && (
             <div className={`alert alert-${alert.type}`}>

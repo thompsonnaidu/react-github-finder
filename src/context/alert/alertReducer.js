@@ -6,15 +6,9 @@ import {
 
 export default (state,action) => {
     switch(action.type){
-        case SET_ALERT:  return{
-            ...state,
-            alert:action.payload
-        }
+        case SET_ALERT: return action.payload
 
-        case REMOVE_ALERT: return {
-            ...state,
-            alert:null
-        }
+        case REMOVE_ALERT: return null
         
         default:
             return state
