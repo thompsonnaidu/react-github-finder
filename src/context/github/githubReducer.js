@@ -3,9 +3,7 @@ import {
     GET_USERS ,
     CLEAR_USERS,
     GET_REPOS,
-    SET_LOADING ,
-    SET_ALERT, 
-    REMOVE_ALERT
+    SET_LOADING 
 
 } from '../types'
 

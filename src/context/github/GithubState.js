@@ -7,15 +7,22 @@ import {
     GET_USERS ,
     CLEAR_USERS,
     GET_REPOS,
-    SET_LOADING ,
-    SET_ALERT, 
-    REMOVE_ALERT
+    SET_LOADING
 
 } from '../types'
 
+
 const GithubState = props=>{
-    const client_id="a1af30da73995945d0c8";
-    const client_secret="93e22c23fd861c5a7672fa735e9c5aab89c2c1a5";
+    let client_id="";
+    let client_secret="";
+
+    if(process.env.NODE_ENV == 'production'){
+        client_id=process.env.GITHUB_CLIENT_ID;
+        client_secret=process.env.GITHUB_CLIENT_SECRET;
+    }else{
+        client_id=process.env.REACT_APP_GITHUB_CLIENT_ID;
+        client_secret=process.env.REACT_APP_GITHUB_CLIENT_SECRET;
+    }
     const initialState = {
         users:[],
         user:{},
